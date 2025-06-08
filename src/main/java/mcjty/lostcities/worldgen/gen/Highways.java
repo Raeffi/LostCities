@@ -96,6 +96,7 @@ public class Highways {
                 if (LostCityTerrainFeature.isEmpty(driver.getBlock())) {
                     driver.block(sup);
                 } else {
+                    driver.block(sup);
                     break;
                 }
                 driver.decY();
@@ -108,6 +109,7 @@ public class Highways {
                 if (LostCityTerrainFeature.isEmpty(driver.getBlock())) {
                     driver.block(sup);
                 } else {
+                    driver.block(sup);
                     break;
                 }
                 driver.decY();

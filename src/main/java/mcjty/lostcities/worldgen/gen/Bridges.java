@@ -35,7 +35,7 @@ public class Bridges {
         ChunkDriver driver = feature.driver;
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                driver.current(x, info.profile.GROUNDLEVEL + 1, z);
+                driver.current(x, info.profile.GROUNDLEVEL, z);
                 int l = 0;
                 while (l < bt.getSliceCount()) {
                     Character c = orientation == Orientation.X ? bt.getPaletteChar(x, l, z) : bt.getPaletteChar(z, l, x); // @todo general rotation system?
@@ -63,24 +63,34 @@ public class Bridges {
             BuildingInfo maxDir = orientation.getMaxDir().get(info);
             if (minDir.hasBridge(info.provider, orientation) != null && maxDir.hasBridge(info.provider, orientation) != null) {
                 // Needs support
-                for (int y = info.waterLevel - 10; y <= info.groundLevel; y++) {
-                    driver.current(7, y, 7).block(sup);
-                    driver.current(7, y, 8).block(sup);
-                    driver.current(8, y, 7).block(sup);
-                    driver.current(8, y, 8).block(sup);
+
+                int[][] tempDriverPos = {{7,7},{7,8},{8,8},{8,7}};
+
+                for (int i = 0; i < 4; i++) {
+
+                    driver.current(tempDriverPos[i][0], info.groundLevel-1, tempDriverPos[i][1]);
+
+                    for (int y = 0; y < 40; y++) {
+                        if (LostCityTerrainFeature.isEmpty(driver.getBlock())) {
+                            driver.block(sup);
+                        } else {
+                            break;
+                        }
+                        driver.decY();
+                    }
                 }
             }
             if (minDir.hasBridge(info.provider, orientation) == null) {
                 // Connection to the side section
                 if (orientation == Orientation.X) {
                     int x = 0;
-                    driver.current(x, info.profile.GROUNDLEVEL, 6);
+                    driver.current(x, info.profile.GROUNDLEVEL-1, 6);
                     for (int z = 6; z <= 9; z++) {
                         driver.block(sup).incZ();
                     }
                 } else {
                     int z = 0;
-                    driver.current(6, info.profile.GROUNDLEVEL, z);
+                    driver.current(6, info.profile.GROUNDLEVEL-1, z);
                     for (int x = 6; x <= 9; x++) {
                         driver.block(sup).incX();
                     }
@@ -90,13 +100,13 @@ public class Bridges {
                 // Connection to the side section
                 if (orientation == Orientation.X) {
                     int x = 15;
-                    driver.current(x, info.profile.GROUNDLEVEL, 6);
+                    driver.current(x, info.profile.GROUNDLEVEL-1, 6);
                     for (int z = 6; z <= 9; z++) {
                         driver.block(sup).incZ();
                     }
                 } else {
                     int z = 15;
-                    driver.current(6, info.profile.GROUNDLEVEL, z);
+                    driver.current(6, info.profile.GROUNDLEVEL-1, z);
                     for (int x = 6; x <= 9; x++) {
                         driver.block(sup).incX();
                     }

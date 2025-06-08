@@ -151,27 +151,27 @@ public class Railways {
             // If there is a rail dungeon north or south we must make a connection here
             if (info.getZmin().railDungeon != null) {
                 for (int z = 0; z < 4; z++) {
-                    driver.current(6, height + 1, z).add(rail).add(air).add(air);
-                    driver.current(7, height + 1, z).add(rail).add(air).add(air);
+                    driver.current(6, height , z).add(rail).add(air).add(air).add(air);
+                    driver.current(7, height , z).add(rail).add(air).add(air).add(air);
                 }
                 for (int z = 0; z < 3; z++) {
-                    driver.current(5, height + 2, z).add(rail).add(rail).add(rail);
+                    driver.current(5, height + 1, z).add(rail).add(rail).add(rail).add(rail);
                     driver.current(6, height + 4, z).block(rail);
                     driver.current(7, height + 4, z).block(rail);
-                    driver.current(8, height + 2, z).add(rail).add(rail).add(rail);
+                    driver.current(8, height + 1, z).add(rail).add(rail).add(rail).add(rail);
                 }
             }
 
             if (info.getZmax().railDungeon != null) {
-                for (int z = 0; z < 5; z++) {
-                    driver.current(6, height + 1, 15 - z).add(rail).add(air).add(air);
-                    driver.current(7, height + 1, 15 - z).add(rail).add(air).add(air);
-                }
                 for (int z = 0; z < 4; z++) {
-                    driver.current(5, height + 2, 15 - z).add(rail).add(rail).add(rail);
+                    driver.current(6, height , 15 - z).add(rail).add(air).add(air).add(air);
+                    driver.current(7, height , 15 - z).add(rail).add(air).add(air).add(air);
+                }
+                for (int z = 0; z < 3; z++) {
+                    driver.current(5, height + 1, 15 - z).add(rail).add(rail).add(rail).add(rail);
                     driver.current(6, height + 4, 15 - z).block(rail);
                     driver.current(7, height + 4, 15 - z).block(rail);
-                    driver.current(8, height + 2, 15 - z).add(rail).add(rail).add(rail);
+                    driver.current(8, height + 1, 15 - z).add(rail).add(rail).add(rail).add(rail);
                 }
             }
         }
@@ -186,51 +186,51 @@ public class Railways {
                 case STATION_UNDERGROUND:
                 case STATION_EXTENSION_SURFACE:
                 case STATION_EXTENSION_UNDERGROUND:
-                case HORIZONTAL: {
-                    if (railInfo.getRails() == 1) {
-                        driver.current(0, height + 1, 5);
-                        for (int x = 0; x < 16; x++) {
-                            driver.block(rail).incX();
-                        }
-                        driver.current(0, height + 1, 9);
-                        for (int x = 0; x < 16; x++) {
-                            driver.block(rail).incX();
-                        }
-                    } else {
-                        driver.current(0, height + 1, 7);
-                        for (int x = 0; x < 16; x++) {
-                            driver.block(rail).incX();
-                        }
-                    }
-                    break;
-                }
+                // case HORIZONTAL: {
+                //     if (railInfo.getRails() == 1) {
+                //         driver.current(0, height + 1, 5);
+                //         for (int x = 0; x < 16; x++) {
+                //             driver.block(rail).incX();
+                //         }
+                //         driver.current(0, height + 1, 9);
+                //         for (int x = 0; x < 16; x++) {
+                //             driver.block(rail).incX();
+                //         }
+                //     } else {
+                //         driver.current(0, height + 1, 7);
+                //         for (int x = 0; x < 16; x++) {
+                //             driver.block(rail).incX();
+                //         }
+                //     }
+                //     break;
+                // }
                 case GOING_DOWN_TWO_FROM_SURFACE:
                 case GOING_DOWN_ONE_FROM_SURFACE:
-                case GOING_DOWN_FURTHER:
-                    if (railInfo.getRails() == 1) {
-                        for (int x = 0; x < 16; x++) {
-                            for (int y = height + 1; y < height + part.getSliceCount(); y++) {
-                                driver.current(x, y, 5);
-                                if (feature.getRailStates().contains(driver.getBlock())) {
-                                    driver.block(rail);
-                                }
-                                driver.current(x, y, 9);
-                                if (feature.getRailStates().contains(driver.getBlock())) {
-                                    driver.block(rail);
-                                }
-                            }
-                        }
-                    } else {
-                        for (int x = 0; x < 16; x++) {
-                            for (int y = height + 1; y < height + part.getSliceCount(); y++) {
-                                driver.current(x, y, 7);
-                                if (feature.getRailStates().contains(driver.getBlock())) {
-                                    driver.block(rail);
-                                }
-                            }
-                        }
-                    }
-                    break;
+                // case GOING_DOWN_FURTHER:
+                //     if (railInfo.getRails() == 1) {
+                //         for (int x = 0; x < 16; x++) {
+                //             for (int y = height + 1; y < height + part.getSliceCount(); y++) {
+                //                 driver.current(x, y, 5);
+                //                 if (feature.getRailStates().contains(driver.getBlock())) {
+                //                     driver.block(rail);
+                //                 }
+                //                 driver.current(x, y, 9);
+                //                 if (feature.getRailStates().contains(driver.getBlock())) {
+                //                     driver.block(rail);
+                //                 }
+                //             }
+                //         }
+                //     } else {
+                //         for (int x = 0; x < 16; x++) {
+                //             for (int y = height + 1; y < height + part.getSliceCount(); y++) {
+                //                 driver.current(x, y, 7);
+                //                 if (feature.getRailStates().contains(driver.getBlock())) {
+                //                     driver.block(rail);
+                //                 }
+                //             }
+                //         }
+                //     }
+                //     break;
                 case THREE_SPLIT:
                 case VERTICAL:
                 case DOUBLE_BEND:
