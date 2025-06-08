@@ -224,24 +224,42 @@ public class ChunkDriver {
 
     private StairsShape getShapeProperty(BlockState state, BlockPos pos) {
         Direction direction = state.getValue(StairBlock.FACING);
+
+        //block behind stairs
         BlockPos relative = pos.relative(direction);
         BlockState blockstate = getBlockSafe(relative);
+
+        //same half (top bottom)
         if (isBlockStairs(blockstate) && state.getValue(StairBlock.HALF) == blockstate.getValue(StairBlock.HALF)) {
+
+            //direction of other block
             Direction direction1 = blockstate.getValue(StairBlock.FACING);
+
+            //compare axis of other block with axis own block
             if (direction1.getAxis() != state.getValue(StairBlock.FACING).getAxis() && isDifferentStairs(state, pos, direction1.getOpposite())) {
                 if (direction1 == direction.getCounterClockWise()) {
                     return StairsShape.OUTER_LEFT;
                 }
 
+                //select left or right
                 return StairsShape.OUTER_RIGHT;
             }
         }
 
+        //block in front of the stairs
         BlockPos relativeOpposite = pos.relative(direction.getOpposite());
         BlockState blockstate1 = getBlockSafe(relativeOpposite);
+
+        //same half (top bottom)
         if (isBlockStairs(blockstate1) && state.getValue(StairBlock.HALF) == blockstate1.getValue(StairBlock.HALF)) {
+
+            //direction of other block
             Direction direction2 = blockstate1.getValue(StairBlock.FACING);
+
+            //compare axis of other block with axis own block
             if (direction2.getAxis() != state.getValue(StairBlock.FACING).getAxis() && isDifferentStairs(state, pos, direction2)) {
+
+                //select left or right
                 if (direction2 == direction.getCounterClockWise()) {
                     return StairsShape.INNER_LEFT;
                 }
